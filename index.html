@@ -1,0 +1,655 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Manuale Underground PureLife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: indice fisso a sinistra (desktop) + colonna di lettura; dossier del covo, nero carbone e oro PureLife */
+:root {
+  --bg: #f5f3ee;
+  --panel: #ffffff;
+  --ink: #1b1914;
+  --muted: #5d584c;
+  --line: #ddd7c8;
+  --gold: #9a7a12;
+  --gold-soft: #f1e7c4;
+  --red: #b3261e;
+  --red-soft: #f8e1df;
+  --ok: #2f6b3a;
+  --code-bg: #ece7da;
+  --f-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", Roboto, sans-serif;
+  --f-mono: "IBM Plex Mono", Consolas, "Courier New", monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111110; --panel: #1a1917; --ink: #ece8dd; --muted: #a39d8d; --line: #2f2c27;
+    --gold: #d4af37; --gold-soft: #2c2512; --red: #ef6b62; --red-soft: #351816; --ok: #7cc48a; --code-bg: #24221e;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111110; --panel: #1a1917; --ink: #ece8dd; --muted: #a39d8d; --line: #2f2c27;
+  --gold: #d4af37; --gold-soft: #2c2512; --red: #ef6b62; --red-soft: #351816; --ok: #7cc48a; --code-bg: #24221e;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--bg); color: var(--ink); font: 16px/1.65 var(--f-body); }
+.wrap { max-width: 1240px; margin: 0 auto; padding-inline: 20px; padding-block: 0 80px; display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 48px; }
+@media (max-width: 900px) { .wrap { grid-template-columns: minmax(0, 1fr); gap: 0; padding-inline: 16px; } }
+
+/* testata */
+header.top { grid-column: 1 / -1; padding-block: 48px 32px; border-bottom: 2px solid var(--ink); display: grid; gap: 14px; }
+.eyebrow { font: 500 12px/1 var(--f-mono); letter-spacing: .18em; text-transform: uppercase; color: var(--gold); }
+h1 { font: 800 clamp(44px, 8vw, 92px)/.9 var(--f-display); text-transform: uppercase; letter-spacing: .01em; margin: 0; text-wrap: balance; }
+h1 span { color: var(--gold); }
+.lead { max-width: 68ch; color: var(--muted); margin: 0; font-size: 17px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 18px; font: 13px/1.4 var(--f-mono); color: var(--muted); }
+.meta b { color: var(--ink); font-weight: 500; }
+
+/* indice */
+nav.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); align-self: start; padding-top: 32px; max-height: calc(100vh - 48px); overflow-y: auto; }
+nav.toc p { font: 500 11px/1 var(--f-mono); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin: 18px 0 8px; }
+nav.toc a { display: block; color: var(--ink); text-decoration: none; font-size: 14px; padding: 4px 0 4px 12px; border-left: 2px solid var(--line); }
+nav.toc a:hover, nav.toc a:focus-visible { border-left-color: var(--gold); color: var(--gold); outline: none; }
+@media (max-width: 900px) {
+  nav.toc { position: static; max-height: none; padding-top: 20px; display: flex; flex-wrap: wrap; gap: 6px; }
+  nav.toc p { width: 100%; margin: 8px 0 2px; }
+  nav.toc a { border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; font-size: 13px; }
+}
+
+main { min-width: 0; padding-top: 24px; }
+section { padding-block: 28px 8px; border-bottom: 1px solid var(--line); scroll-margin-top: 16px; }
+section:last-child { border-bottom: 0; }
+.part { font: 800 15px/1 var(--f-display); letter-spacing: .14em; text-transform: uppercase; color: var(--bg); background: var(--ink); display: inline-block; padding: 7px 12px 6px; margin: 40px 0 0; }
+h2 { font: 800 clamp(30px, 4vw, 42px)/1 var(--f-display); text-transform: uppercase; margin: 0 0 16px; text-wrap: balance; }
+h3 { font: 600 19px/1.3 var(--f-body); margin: 28px 0 8px; }
+p, li { max-width: 72ch; }
+ul, ol { padding-left: 22px; display: grid; gap: 6px; }
+a { color: var(--gold); }
+strong { font-weight: 600; }
+code, kbd { font: 500 .88em var(--f-mono); background: var(--code-bg); border-radius: 4px; padding: 1px 6px; white-space: nowrap; }
+kbd { border: 1px solid var(--line); border-bottom-width: 2px; background: var(--panel); }
+button.cmd { font: 500 14px var(--f-mono); background: var(--code-bg); color: var(--ink); border: 1px dashed var(--muted); border-radius: 4px; padding: 2px 8px; cursor: pointer; }
+button.cmd:hover, button.cmd:focus-visible { border-color: var(--gold); color: var(--gold); outline: none; }
+button.cmd.copiato::after { content: " copiato"; color: var(--ok); }
+
+/* tabelle */
+.tbl { overflow-x: auto; margin: 14px 0 6px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+th, td { text-align: left; vertical-align: top; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+th { font: 500 11.5px/1.3 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); background: var(--bg); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.c { text-align: center; font-weight: 600; }
+td .si { color: var(--ok); } td .no { color: var(--muted); }
+
+/* avvisi */
+.note { border-left: 3px solid var(--gold); background: var(--gold-soft); padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+.note.warn { border-left-color: var(--red); background: var(--red-soft); }
+.note p { margin: 0; }
+.note p + p, .note ul { margin-top: 6px; }
+
+/* confronto gang */
+.duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 16px 0; }
+@media (max-width: 640px) { .duo { grid-template-columns: minmax(0, 1fr); } }
+.duo article { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--gold); border-radius: 6px; padding: 16px 18px; min-width: 0; }
+.duo article.nat { border-top-color: var(--ink); }
+.duo h4 { font: 800 22px/1 var(--f-display); text-transform: uppercase; margin: 0 0 10px; }
+.duo dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 14px; margin: 0; font-size: 14.5px; }
+.duo dt { color: var(--muted); font-size: 13px; }
+.duo dd { margin: 0; }
+
+/* scala dei gradi */
+.scala { display: grid; gap: 6px; margin: 18px 0; }
+.gradino { display: grid; grid-template-columns: 56px minmax(0, 1fr); align-items: stretch; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.gradino .n { font: 800 32px/1 var(--f-display); display: grid; place-items: center; background: var(--ink); color: var(--bg); }
+.gradino.capo .n { background: var(--gold); color: #111; }
+.gradino div { padding: 10px 14px; min-width: 0; }
+.gradino b { font: 800 19px/1.1 var(--f-display); text-transform: uppercase; letter-spacing: .03em; display: block; }
+.gradino small { color: var(--muted); font-size: 13.5px; }
+.gradino:nth-child(1) { margin-right: 0; } .gradino:nth-child(2) { margin-right: 4%; } .gradino:nth-child(3) { margin-right: 8%; }
+.gradino:nth-child(4) { margin-right: 12%; } .gradino:nth-child(5) { margin-right: 16%; }
+@media (max-width: 640px) { .gradino { margin-right: 0 !important; } }
+
+/* passi */
+ol.passi { list-style: none; padding: 0; counter-reset: p; gap: 12px; }
+ol.passi > li { counter-increment: p; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; max-width: none; }
+ol.passi > li::before { content: counter(p); font: 800 20px/34px var(--f-display); text-align: center; width: 34px; height: 34px; border: 2px solid var(--gold); color: var(--gold); border-radius: 50%; }
+ol.passi > li > div { min-width: 0; padding-top: 4px; }
+
+details { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 10px 16px; margin: 8px 0; }
+details summary { cursor: pointer; font-weight: 600; }
+details[open] summary { margin-bottom: 8px; }
+.filtro { width: 100%; max-width: 420px; font: 15px var(--f-body); padding: 9px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); color: var(--ink); }
+.filtro:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+.vuoto { color: var(--muted); font-style: italic; }
+footer { margin-top: 36px; font: 13px/1.6 var(--f-mono); color: var(--muted); }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">PureLife RP · Manuale staff · Underground Operations</div>
+    <h1>Il sistema <span>gang</span></h1>
+    <p class="lead">Come si prepara una gang da zero, come la si gestisce ogni giorno e cosa possono fare i membri con il telefono MUTO, la bacheca del covo, gli armadietti e le porte. La prima parte è per i gamemaster, la seconda si può girare ai giocatori delle gang.</p>
+    <div class="meta"><span>Aggiornato al <b>03/10/2026</b></span><span>Risorsa <b>purelife_underground</b></span><span>Fasi attive: <b>Gang Core · telefono e bacheca · armadietti · gradi Quasar</b></span></div>
+  </header>
+
+  <nav class="toc" aria-label="Indice">
+    <p>Basi</p>
+    <a href="#panoramica">Panoramica</a>
+    <a href="#due-tipi">Gang Quasar e native</a>
+    <p>Per i GM</p>
+    <a href="#requisiti">Accesso al pannello</a>
+    <a href="#crea-quasar">Creare una gang Quasar</a>
+    <a href="#crea-nativa">Creare una gang nativa</a>
+    <a href="#profilo">Profilo e stile</a>
+    <a href="#ruoli">Ruoli e permessi</a>
+    <a href="#gradi-quasar">Gradi nelle gang Quasar</a>
+    <a href="#bacheca">Piazzare la bacheca</a>
+    <a href="#stash">Stash e armadietti</a>
+    <a href="#porte">Porte</a>
+    <a href="#telefono">Telefono MUTO</a>
+    <a href="#collaudo">Collaudo</a>
+    <a href="#gestione">Gestione quotidiana</a>
+    <a href="#problemi">Problemi e soluzioni</a>
+    <p>Per le gang</p>
+    <a href="#g-telefono">Il telefono</a>
+    <a href="#g-bacheca">La bacheca</a>
+    <a href="#g-stash">Armadietti e porte</a>
+    <a href="#g-regole">Gerarchia</a>
+    <p>Consultazione</p>
+    <a href="#tabelle">Comandi e permessi</a>
+    <a href="#numeri">Numeri utili</a>
+    <a href="#faq">Domande frequenti</a>
+    <a href="#futuro">In arrivo</a>
+  </nav>
+
+  <main>
+    <section id="panoramica">
+      <h2>Panoramica</h2>
+      <p>Underground è il sistema che governa le gang di PureLife. Decide chi fa parte di quale gang e con quale grado (da 0 a 4), chi apre le porte e gli armadietti del covo, e gestisce gli strumenti dei giocatori: il <strong>telefono usa e getta MUTO</strong> e la <strong>bacheca del covo</strong>. Lo staff lavora dal <strong>Control Center</strong>, e ogni azione finisce nel <strong>registro</strong>.</p>
+      <p>Le gang <strong>non sono lavori ESX</strong>: non esistono in <code>jobs</code>, quindi MDT della polizia, <code>/lavori</code> e multijob non le vedono. Ogni decisione la prende il server: se Underground è fermo, porte e stash delle gang restano <strong>chiuse a tutti</strong>.</p>
+      <h3>Chi decide cosa</h3>
+      <ul>
+        <li><strong>Staff</strong>, dal Control Center: crea e collega le gang, profilo e stile, ruoli e permessi, gradi, membri, stash, bacheca, ispezioni, registro, collaudo.</li>
+        <li><strong>Quasar</strong> (solo gang Quasar): chi è membro e chi è il proprietario. Si usa <code>/crimecreator</code> e il menu organizzazione <kbd>F4</kbd>.</li>
+        <li><strong>doors_creator</strong>, modulo <code>purelife</code>: le porte aggiuntive del covo, che chiedono a Underground chi può aprire.</li>
+        <li><strong>ox_inventory</strong>: il contenuto delle stash e l'oggetto <code>ug_telefono</code>.</li>
+        <li><strong>I capi</strong>, con telefono e bacheca: reclutano, danno i gradi più bassi, piazzano e chiudono stash, buttano fuori. Solo nei limiti dei permessi del loro grado.</li>
+      </ul>
+    </section>
+
+    <section id="due-tipi">
+      <h2>Gang Quasar e gang native</h2>
+      <div class="duo">
+        <article>
+          <h4>Gang Quasar</h4>
+          <dl>
+            <dt>Nasce</dt><dd>In Quasar con <code>/crimecreator</code>, poi si collega con Importa da Quasar</dd>
+            <dt>Membri</dt><dd>Li decide Quasar</dd>
+            <dt>Capo (4)</dt><dd>Sempre il proprietario nel Crime Creator</dd>
+            <dt>Gradi 0-3</dt><dd>Da Underground: staff dal pannello, capo dalla bacheca</dd>
+            <dt>Entrate</dt><dd>Invito accettato, oppure menu <kbd>F4</kbd> di Quasar</dd>
+            <dt>Espulsioni</dt><dd>Online da Underground, offline solo da <kbd>F4</kbd></dd>
+            <dt>Cambio capo</dt><dd>Solo nel Crime Creator</dd>
+          </dl>
+        </article>
+        <article class="nat">
+          <h4>Gang nativa</h4>
+          <dl>
+            <dt>Nasce</dt><dd>Nel Control Center, Gang &gt; Nuova gang</dd>
+            <dt>Membri</dt><dd>Li decide Underground</dd>
+            <dt>Capo (4)</dt><dd>Chi ha il livello 4 in Underground</dd>
+            <dt>Gradi 0-4</dt><dd>Da Underground</dd>
+            <dt>Entrate</dt><dd>Invito accettato</dd>
+            <dt>Espulsioni</dt><dd>Online e offline, da pannello, telefono o bacheca</dd>
+            <dt>Cambio capo</dt><dd>"Passa il comando" alla bacheca</dd>
+          </dl>
+        </article>
+      </div>
+      <div class="note"><p>Nelle gang Quasar <strong>invitare ed espellere</strong> dipendono solo da Quasar: può farlo chi in Quasar è il capo o ha la gestione membri. I ruoli Underground valgono per gradi, stash, porte, registro, messaggi e telefoni.</p></div>
+    </section>
+
+    <div class="part">Parte 1 · Per i gamemaster</div>
+
+    <section id="requisiti">
+      <h2>Accesso al Control Center</h2>
+      <ul>
+        <li>Si apre con <button class="cmd" type="button">/underground</button> oppure con il tasto <em>"Underground: Control Center (staff)"</em>, da assegnare in Impostazioni &gt; Tasti &gt; FiveM. Non c'è un tasto predefinito.</li>
+        <li>Serve il <strong>personaggio staff dedicato</strong> (marcato con <code>/setstaffchar</code>), il <strong>potere staff attivo</strong> e almeno il livello <strong>admin</strong>. Chi gioca col personaggio civile non lo apre. L'Amministrazione lo apre da qualsiasi personaggio.</li>
+        <li>Sezioni: Panoramica, Gang, Importa da Quasar, Giocatori, Registro, Collaudo. Schede di ogni gang: Membri, Profilo, Ruoli, Ranghi Quasar, Porte, Stash, Bacheca, Registro.</li>
+        <li><kbd>ESC</kbd> chiude la finestra aperta, poi torna indietro, poi chiude il pannello. Se ci sono modifiche non salvate chiede conferma.</li>
+      </ul>
+      <div class="note warn">
+        <p><strong>Ogni azione chiede un motivo</strong> (da 3 a 200 caratteri), che finisce nel registro e nei log staff.</p>
+        <p>Le azioni dello staff su una gang compaiono anche nel <strong>registro di quella gang</strong>, che i capi leggono dal telefono e dalla bacheca. Scrivete motivi neutri.</p>
+      </div>
+    </section>
+
+    <section id="crea-quasar">
+      <h2>Creare una gang Quasar</h2>
+      <ol class="passi">
+        <li><div><strong>Crea l'organizzazione in Quasar</strong> con <button class="cmd" type="button">/crimecreator</button>. Scegli tipo, interno, Porte MLO e garage. Il <strong>proprietario</strong> che scegli qui sarà il <strong>capo, livello 4</strong>, in Underground.</div></li>
+        <li><div><strong>Collegala</strong> dal Control Center &gt; <strong>Importa da Quasar</strong>. I passi sono Organizzazione, Identità, Ranghi, Conferma.
+          <ul>
+            <li><strong>Chiave</strong>: minuscole, numeri e <code>_</code>, inizia con una lettera, da 2 a 32 caratteri. <strong>Non si cambia più</strong>: la usano porte, stash, grafica dell'armadietto e stile. Non può coincidere con un lavoro ESX.</li>
+            <li><strong>Nome</strong> e <strong>colore</strong>.</li>
+            <li><strong>Ranghi</strong>, facoltativi. Ora che i gradi si danno da Underground, servono solo per chi non ha ancora un grado. Un rango non collegato vale Recluta.</li>
+            <li>Motivo, poi <strong>Collega e crea</strong>. Quasar non viene modificato.</li>
+          </ul></div></li>
+        <li><div>Prosegui con <a href="#profilo">profilo e stile</a>, <a href="#ruoli">ruoli</a>, <a href="#bacheca">bacheca</a>, <a href="#stash">stash</a>, <a href="#porte">porte</a>, <a href="#telefono">telefoni</a> e <a href="#collaudo">collaudo</a>.</div></li>
+      </ol>
+      <div class="note"><p>La testata del Control Center mostra il collegamento con Quasar:</p>
+        <ul>
+          <li><strong>Export</strong>: tutto funziona dal pannello.</li>
+          <li><strong>SQL lettura</strong>: i membri si leggono dal database, entrate ed espulsioni si fanno da <kbd>F4</kbd>, i gradi restano su Underground.</li>
+          <li><strong>Spento</strong>: le gang Quasar sono chiuse.</li>
+        </ul></div>
+    </section>
+
+    <section id="crea-nativa">
+      <h2>Creare una gang nativa</h2>
+      <ol class="passi">
+        <li><div>Control Center &gt; <strong>Gang &gt; Nuova gang</strong>: chiave (stesse regole), nome da 2 a 48 caratteri, colore, motivo.</div></li>
+        <li><div><strong>Primo capo</strong>: scheda Membri &gt; <strong>Invita</strong>. Cerchi per ID online o per almeno 3 lettere di nome e cognome; il giocatore deve essere online e senza gang. Riceve il biglietto <em>"CI STO / NO, GRAZIE"</em> e ha 90 secondi per rispondere (se guida, il biglietto aspetta che si fermi).</div></li>
+        <li><div>Entra come Recluta: dalla tendina del ruolo mettilo a <strong>4 · Leader</strong>.</div></li>
+      </ol>
+    </section>
+
+    <section id="profilo">
+      <h2>Profilo, colori e stile</h2>
+      <ul>
+        <li><strong>Nome</strong>: se lo cambi, nelle gang Quasar non viene più sovrascritto da Quasar.</li>
+        <li><strong>Colore</strong>: vale solo in Underground.</li>
+        <li><strong>Logo</strong>: facoltativo, un indirizzo <code>https://</code> di un'immagine quadrata.</li>
+        <li><strong>Stile del kit</strong>: decide la grafica di telefono, bacheca e avvisi. <em>Automatico</em> lo ricava dalla chiave (per esempio <code>grove</code> o <code>gsf</code> danno Families, <code>lsv</code> Vagos, <code>vla</code> Aztecas, <code>mg</code> Marabunta). Oppure uno dei 7 stili: Ballas, Families, Vagos, Marabunta, Redside, Aztecas, Underground neutro.</li>
+        <li><strong>Stato</strong>:
+          <ul>
+            <li><em>Attiva</em>.</li>
+            <li><em>Sospesa</em>: porte e stash chiuse, telefono su "LINEA SOSPESA".</li>
+            <li><em>Archiviata</em>: chiusa, e i messaggi del canale vengono azzerati.</li>
+            <li><em>Orfana</em> la imposta il sistema (vedi <a href="#gestione">gestione</a>).</li>
+          </ul></li>
+      </ul>
+    </section>
+
+    <section id="ruoli">
+      <h2>Ruoli, livelli e permessi</h2>
+      <p>Dalla scheda <strong>Ruoli</strong> si possono rinominare i 5 ruoli e cambiare i loro permessi, gang per gang. Il Leader tiene sempre tutti i permessi. Questi sono i valori con cui nasce ogni gang:</p>
+      <div class="scala" role="list">
+        <div class="gradino capo" role="listitem"><span class="n">4</span><div><b>Leader</b><small>Tutti i permessi</small></div></div>
+        <div class="gradino" role="listitem"><span class="n">3</span><div><b>Vice Leader</b><small>stash · piazza_stash · invitare · espellere · registro · messaggi · telefoni</small></div></div>
+        <div class="gradino" role="listitem"><span class="n">2</span><div><b>Capitano</b><small>stash · invitare · messaggi</small></div></div>
+        <div class="gradino" role="listitem"><span class="n">1</span><div><b>Operativo</b><small>stash · messaggi</small></div></div>
+        <div class="gradino" role="listitem"><span class="n">0</span><div><b>Recluta</b><small>Nessun permesso: legge e ascolta</small></div></div>
+      </div>
+      <div class="tbl"><table>
+        <thead><tr><th>Permesso</th><th>Cosa consente</th></tr></thead>
+        <tbody>
+          <tr><td><code>stash</code></td><td>Aprire le stash della gang</td></tr>
+          <tr><td><code>piazza_stash</code></td><td>Piazzare, spostare, chiudere e riaprire le stash che il proprio grado vede</td></tr>
+          <tr><td><code>invitare</code></td><td>Invitare nuovi membri (solo gang native)</td></tr>
+          <tr><td><code>espellere</code></td><td>Espellere membri di grado inferiore (solo gang native)</td></tr>
+          <tr><td><code>ruoli</code></td><td>Cambiare il grado ai membri di grado inferiore, anche nelle gang Quasar</td></tr>
+          <tr><td><code>registro</code></td><td>Leggere il registro della gang</td></tr>
+          <tr><td><code>messaggi</code></td><td>Scrivere sul canale del telefono</td></tr>
+          <tr><td><code>telefoni</code></td><td>Prendere telefoni dalla scatola della bacheca</td></tr>
+        </tbody>
+      </table></div>
+      <div class="note"><p><strong>Regole fisse, controllate dal server:</strong> nessuno agisce su un membro di grado uguale o superiore al proprio, nessuno promuove al proprio livello o sopra, nessuno agisce su sé stesso.</p>
+      <p>Di default solo il Leader ha <code>ruoli</code>. Se volete che anche il Vice possa promuovere Reclute e Operativi, date <code>ruoli</code> al livello 3.</p></div>
+    </section>
+
+    <section id="gradi-quasar">
+      <h2>Gradi nelle gang Quasar</h2>
+      <ul>
+        <li>Il <strong>proprietario</strong> dell'organizzazione nel Crime Creator è sempre <strong>livello 4</strong>. Da Underground non si tocca, e nessun altro può diventare 4.</li>
+        <li>Gli altri membri hanno un grado da <strong>0 a 3</strong> salvato in Underground. Lo cambiano lo <strong>staff</strong> (scheda Membri, tendina del ruolo, anche con il membro offline) e il <strong>capo</strong> o chi ha <code>ruoli</code>, dalla bacheca del covo.</li>
+        <li>Se un membro non ha un grado Underground, vale il rango Quasar collegato; se manca anche quello, è Recluta.</li>
+        <li>Chi esce dall'organizzazione perde il grado. Se rientra, riparte dal rango Quasar o da Recluta.</li>
+        <li><strong>"Passa il comando" è disattivato</strong>: il capo si cambia nel Crime Creator.</li>
+      </ul>
+      <div class="note warn"><p>Dopo l'aggiornamento, controllate che il proprietario compaia come <strong>4 · CAPO</strong> nella scheda Membri e che in gioco abbia davvero i poteri da Leader. Se non è così, fate il test <strong>T10</strong> del collaudo con lui online e segnalatelo a chi gestisce gli script.</p></div>
+    </section>
+
+    <section id="bacheca">
+      <h2>Piazzare la bacheca del covo</h2>
+      <ol class="passi">
+        <li><div>Vai nel covo, davanti al muro scelto, entro 5 m dal punto.</div></li>
+        <li><div>Control Center &gt; Gang &gt; scheda <strong>Bacheca</strong> &gt; <strong>Piazza bacheca</strong>.</div></li>
+        <li><div><strong>Oggetto</strong>: <strong>Bacheca della gang (PureLife)</strong>, predefinita e consigliata. È la nostra bacheca 3D con i colori, i tag e lo stemma della gang, una lampada sopra e una mensola con bombolette e telefono. Da vicino i membri vedono la crew dal vivo: polaroid per grado, chi è in giro, stash e porte. In alternativa ci sono i prop di GTA (sughero, sughero con polaroid, foto e appunti, lavagne). Se il covo ha già una bacheca nel MLO, scegli <em>"Nessun prop"</em> e salvi solo il punto.</div></li>
+        <li><div><strong>Nome</strong> (predefinito "Bacheca &lt;gang&gt;"), motivo, poi <strong>Vai al piazzamento</strong>.</div></li>
+        <li><div><strong>Allineamento</strong>:
+          <ul>
+            <li>mira il muro: la bacheca si appoggia da sola al muro, dritta. Contorno <strong>oro</strong> se il punto è valido, <strong>rosso</strong> se è oltre 5 m;</li>
+            <li><kbd>Q</kbd>/<kbd>E</kbd> o la rotella ruotano, con <kbd>Shift</kbd> il movimento è fine;</li>
+            <li>le frecce <kbd>↑</kbd>/<kbd>↓</kbd> cambiano l'altezza;</li>
+            <li><kbd>G</kbd> apre la regolazione fine, se c'è un prop;</li>
+            <li>clic sinistro o <kbd>Invio</kbd> conferma, clic destro, <kbd>Esc</kbd> o <kbd>Backspace</kbd> annulla;</li>
+            <li>dopo 3 minuti il piazzamento si annulla da solo.</li>
+          </ul></div></li>
+      </ol>
+      <p>Una bacheca per gang. Dalla stessa scheda: Modifica, Sposta, Spegni/Riaccendi, Elimina (i telefoni già dati restano). La bacheca la vedono e la aprono <strong>solo i membri</strong> di quella gang, entro 2,5 m: lo staff la gestisce dal pannello ma non la apre.</p>
+    </section>
+
+    <section id="stash">
+      <h2>Stash e armadietti</h2>
+      <p>Sul posto, scheda <strong>Stash &gt; Piazza stash</strong>:</p>
+      <ul>
+        <li><strong>Nome</strong>: se vuoto, "Deposito &lt;gang&gt;" o "Armadietto &lt;gang&gt;".</li>
+        <li><strong>Livello minimo</strong>, predefinito 1 · Operativo: chi è sotto non vede nemmeno la stash.</li>
+        <li><strong>Capienza</strong>: predefinita 50 slot e 250 kg, regolabile da 10 a 150 slot e da 10 a 1000 kg.</li>
+        <li><strong>Oggetto</strong>:
+          <ul>
+            <li><strong>Armadietto della gang</strong>: blindato, con colori, stemma e graffiti della gang e due ante che si aprono. Ballas, Families, Vagos, Redside, Aztecas e Marabunta hanno la loro grafica, le altre il nero e oro UNDERGROUND.</li>
+            <li>Un prop di GTA: casse, cassa militare, cassa armi, cassettiera, armadietto, cassaforte.</li>
+            <li>Nessuno, per agganciare la stash a un mobile del covo.</li>
+          </ul></li>
+        <li>Motivo e piazzamento, con gli stessi comandi della bacheca. L'armadietto va girato con il davanti verso la stanza.</li>
+      </ul>
+      <div class="tbl"><table>
+        <thead><tr><th>Regola</th><th>Valore</th></tr></thead>
+        <tbody>
+          <tr><td>Stash per gang</td><td>al massimo 6</td></tr>
+          <tr><td>Distanza tra due stash</td><td>1,5 m, oppure 2 m se c'è un armadietto</td></tr>
+          <tr><td>Apertura</td><td>membro vivo con permesso <code>stash</code> e grado ≥ minimo, entro 2,5 m, stash e gang attive</td></tr>
+          <tr><td>Eliminazione</td><td>solo staff. Se la stash non è vuota, il contenuto va spostato in un'altra stash della gang</td></tr>
+          <tr><td>Ispezione del contenuto</td><td>permesso <code>underground.stash.ispeziona</code> (responsabile staff), motivo obbligatorio</td></tr>
+          <tr><td>Pulizia automatica</td><td>ox_inventory cancella le stash non aperte da 6 mesi</td></tr>
+        </tbody>
+      </table></div>
+      <p>I membri con <code>piazza_stash</code> possono piazzare dal telefono (<em>PIAZZA QUI</em>) o dalla bacheca (<em>NUOVA STASH</em>): ottengono sempre l'armadietto della gang, con capienza predefinita, e non possono eliminare.</p>
+    </section>
+
+    <section id="porte">
+      <h2>Porte del covo</h2>
+      <ol class="passi">
+        <li><div><strong>Una volta sola</strong>: in doors_creator, Impostazioni &gt; Moduli &gt; <strong>gangs = purelife</strong>.</div></li>
+        <li><div>Crea la porta come al solito. Nelle condizioni scegli solo <strong>"Richiede una gang"</strong>, senza job, scegli la gang e <strong>spunta ogni grado</strong> che deve entrare. Lasciala chiusa di default.</div></li>
+        <li><div>Non ricreare in doors_creator le Porte MLO già scelte nel Crime Creator: restano a Quasar. Il pannello avvisa se una porta è a meno di 3 m da una Porta MLO di Quasar.</div></li>
+      </ol>
+      <div class="note warn"><p>Underground controlla il <strong>grado esatto spuntato</strong>, non "dal grado in su". Per far entrare Operativi, Capitani, Vice e Leader spuntate tutti e quattro.</p></div>
+      <p>La polizia non entra grazie al lavoro: entra solo forzando la porta (grimaldello o ariete), dove è previsto. La scheda Porte della gang mostra le porte collegate in sola lettura.</p>
+    </section>
+
+    <section id="telefono">
+      <h2>Telefono MUTO</h2>
+      <p>In inventario è <strong>"Usa e getta MUTO"</strong> (<code>ug_telefono</code>, 180 g, non si impila). La SIM si lega alla gang <strong>al primo uso</strong> di un membro, anche una Recluta. Tre modi per darlo:</p>
+      <ol>
+        <li><strong>Scatola della bacheca</strong> (consigliato): chi ha il permesso <code>telefoni</code> apre la bacheca e prende un telefono già legato alla gang. Massimo 6 ogni 24 ore per gang.</li>
+        <li><strong>Staff</strong>: <button class="cmd" type="button">/giveitem ID ug_telefono 1</button>. Se lo usa prima un civile, vede NESSUN SEGNALE e il telefono resta libero.</li>
+        <li><strong>Negozi</strong>: oggi nessun negozio lo vende. Si può aggiungere se lo staff lo decide.</li>
+      </ol>
+    </section>
+
+    <section id="collaudo">
+      <h2>Collaudo T1-T10</h2>
+      <p>Control Center &gt; <strong>Collaudo</strong>. Per ogni test ci sono i passi, il pulsante <strong>Esegui</strong> per i controlli automatici e la spunta OK/KO, che viene salvata. Usate personaggi di prova per T4, T5 e T10.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Test</th><th>Cosa provare</th></tr></thead>
+        <tbody>
+          <tr><td><strong>T1</strong></td><td>All'avvio di doors_creator la console scrive <code>[plu] modulo gang caricato (server)</code>, e il modulo gangs è purelife</td></tr>
+          <tr><td><strong>T2</strong> · bloccante</td><td>Porta solo gang: il membro apre, chi non è membro no. Espulso dal pannello: chiusa subito; tolto da F4: entro 15 s. Con Underground fermo: chiusa a tutti</td></tr>
+          <tr><td><strong>T3</strong></td><td>Stash: il membro apre, il non membro no (nemmeno da F8). Oltre 2,5 m no, da morto no, con Underground fermo no</td></tr>
+          <tr><td><strong>T4</strong></td><td>L'Operativo non piazza, il Leader sì. Limiti per gang e distanza. Dopo un riavvio la stash c'è con lo stesso contenuto</td></tr>
+          <tr><td><strong>T5</strong></td><td>Entrare in una gang non cambia MDT, <code>/lavori</code> né multijob</td></tr>
+          <tr><td><strong>T6</strong></td><td>Import e ranghi. Organizzazione cancellata: orfana dopo 2 giri, poi si ricollega</td></tr>
+          <tr><td><strong>T7</strong></td><td>Dati sbagliati e spam sempre rifiutati</td></tr>
+          <tr><td><strong>T8</strong></td><td>Riavvio di purelife_underground e di ox_inventory: tornano tutti gli agganci. Al cambio personaggio spariscono zone e accessi</td></tr>
+          <tr><td><strong>T9</strong></td><td>Chi in Quasar non è capo non diventa Leader</td></tr>
+          <tr><td><strong>T10</strong></td><td>Export Quasar: forma dei dati, tempi, inviti, ripiego in SQL lettura se Quasar si ferma</td></tr>
+        </tbody>
+      </table></div>
+      <details><summary>Prove in più per telefono e bacheca</summary>
+        <ul>
+          <li>Il membro vede il target della bacheca, il civile no. <kbd>Esc</kbd> chiude e la camera torna normale.</li>
+          <li>Scatola: dopo il primo telefono dice "5 per oggi".</li>
+          <li>Il codice "PULA IN ZONA" arriva solo a chi ha addosso il telefono della gang.</li>
+          <li>Un civile con lo stesso telefono vede NESSUN SEGNALE.</li>
+          <li>BRUCIA tenuto premuto 1,5 s: il telefono sparisce, il personaggio lo posa a terra e partono le scintille.</li>
+          <li>Chi viene buttato fuori col telefono aperto lo vede chiudersi, e riaprendolo trova NESSUN SEGNALE.</li>
+          <li>Il capo lontano dal covo non può dare gradi: "Questo si fa davanti alla bacheca del covo".</li>
+        </ul>
+      </details>
+    </section>
+
+    <section id="gestione">
+      <h2>Gestione quotidiana</h2>
+      <h3>Cambiare i gradi</h3>
+      <p>Staff: scheda Membri, tendina del ruolo, motivo. Gang native da 0 a 4, gang Quasar da 0 a 3, in entrambi i casi anche offline. I giocatori lo fanno solo davanti alla bacheca. L'effetto è immediato: porte, stash e zone si aggiornano subito.</p>
+      <h3>Aggiungere e togliere membri</h3>
+      <ul>
+        <li><strong>Aggiungere</strong>: scheda Membri &gt; Invita, oppure sezione Giocatori &gt; "Invita in una gang". Lo staff invita chiunque sia online, i capi solo chi è entro 8 m. Chi è già in una gang viene rifiutato. Nelle gang Quasar si possono fare al massimo 20 azioni all'ora per gang.</li>
+        <li><strong>Togliere</strong>: scheda Membri &gt; espelli + motivo; l'accesso si perde subito. Nelle gang Quasar solo i membri online: gli offline si tolgono da <kbd>F4</kbd> e perdono l'accesso entro 15 s. Il capo Quasar non si espelle da qui.</li>
+        <li><strong>Cercare un personaggio</strong>: la sezione Giocatori mostra gang, ruolo e fonte.</li>
+      </ul>
+      <h3>Registro</h3>
+      <p>Control Center &gt; Registro, con filtri per gang, categoria e livello (Info, Avviso, Sicurezza, Staff). Contiene ingressi, espulsioni, gradi, stash, depositi e prelievi, ispezioni, bacheche, telefoni e violazioni. Si conserva 90 giorni e resta anche se il personaggio viene eliminato. Il testo dei messaggi del telefono non compare nel pannello: è salvato nel database (<code>plu_logs.metadata</code>).</p>
+      <h3>Sanzioni</h3>
+      <p>Non c'è un modulo sanzioni dedicato. Gli strumenti sono: <strong>sospendere</strong> o <strong>archiviare</strong> la gang, disattivare singole stash, spegnere la bacheca, ispezionare una stash, retrocedere o espellere, togliere i telefoni con gli strumenti di inventario. Ban, jail e warn si fanno con i comandi staff abituali.</p>
+      <h3>Se il capo lascia</h3>
+      <ul>
+        <li><strong>Gang nativa</strong>: il Leader non può uscire. Prima, alla bacheca, usa <em>PASSA IL COMANDO</em> (lui scende a Vice), poi può usare <em>ME NE VADO</em>. Se il capo è sparito, lo staff mette un altro membro a 4 · Leader e poi retrocede o espelle il vecchio.</li>
+        <li><strong>Gang Quasar</strong>: si cambia il proprietario con <code>/crimecreator</code>. Underground lo segue da solo entro circa 60 secondi o al prossimo accesso del giocatore.</li>
+      </ul>
+      <h3>Gang orfana</h3>
+      <p>Se l'organizzazione Quasar sparisce per due controlli di fila, la gang diventa orfana: porte e stash chiuse e avviso in Panoramica. Torna attiva solo con <strong>Importa da Quasar &gt; Ricollega orfana</strong>, che mantiene chiave, porte e stash.</p>
+      <h3>Wipe di un personaggio</h3>
+      <p>Il wipe del personaggio toglie l'appartenenza alla gang, gli inviti, il grado Underground nelle gang Quasar e l'appartenenza Quasar. Il registro e il contenuto delle stash restano, perché sono della gang.</p>
+    </section>
+
+    <section id="problemi">
+      <h2>Problemi e soluzioni</h2>
+      <label for="cerca-problemi" class="eyebrow" style="display:block;margin-bottom:8px">Cerca un problema</label>
+      <input id="cerca-problemi" class="filtro" type="search" placeholder="es. porte, telefono, stash">
+      <div class="tbl"><table id="tab-problemi">
+        <thead><tr><th>Problema</th><th>Cosa fare</th></tr></thead>
+        <tbody>
+          <tr><td>Il telefono si chiude da solo</td><td>Si chiude se il personaggio muore, cade, nuota o va in ragdoll, se l'oggetto esce dall'inventario, se perde la gang, se si apre un'altra interfaccia o si ripreme il tasto. Se succede in altri casi: usarlo una volta sola dall'inventario o dalla barra 1-5, oppure assegnare il tasto "Underground: telefono usa e getta"</td></tr>
+          <tr><td>"Ti serve il telefono della gang addosso"</td><td>Le azioni valgono solo con un telefono di quella gang addosso o davanti alla bacheca (4 m). Un telefono di un'altra gang non conta</td></tr>
+          <tr><td>"Questo si fa davanti alla bacheca del covo"</td><td>Gradi, passaggio del comando e uscita si fanno solo alla bacheca</td></tr>
+          <tr><td>Quasar non segna il capo</td><td>Nella scheda Membri il proprietario deve risultare 4 · CAPO. Se in gioco non ha i poteri da Leader: test T10 con lui online, poi riassegnare il proprietario nel Crime Creator e farlo rientrare</td></tr>
+          <tr><td>Le porte non si aprono</td><td>1) Panoramica: avvisi del modulo porte e test T1. 2) Porta con "Richiede una gang", senza job, con tutti i gradi ammessi spuntati. 3) Gang attiva. 4) Grado del giocatore. 5) Dopo un cambio in Quasar servono fino a 15 s. 6) Conflitto con una Porta MLO di Quasar</td></tr>
+          <tr><td>La stash non si vede</td><td>Serve il permesso <code>stash</code> e un grado almeno pari al minimo, con stash e gang attive. L'armadietto compare entro 40 m. Provare un cambio personaggio o un rientro</td></tr>
+          <tr><td>La stash si vede ma non si apre</td><td>Oltre 2,5 m, da morto, stash disattivata o in eliminazione, oppure grado sotto il minimo</td></tr>
+          <tr><td>La bacheca non si apre</td><td>Solo membri di quella gang, entro 2,5 m, vivi, con gang e bacheca attive. Con il telefono aperto non parte</td></tr>
+          <tr><td>I messaggi non arrivano</td><td>Arrivano solo a chi è online con il telefono della gang addosso. Le Reclute non scrivono. Limiti: 1 messaggio ogni 15 s a testa, 10 ogni 5 minuti per gang. Dopo un riavvio il canale è vuoto</td></tr>
+          <tr><td>La scatola dei telefoni è vuota</td><td>6 telefoni ogni 24 ore per gang. Servono anche spazio in inventario e il permesso <code>telefoni</code></td></tr>
+          <tr><td>Inviti o espulsioni Quasar "dal menu F4"</td><td>Quasar è in SQL lettura o gli export di scrittura non rispondono: usare F4 finché non torna "Export"</td></tr>
+          <tr><td>Avviso "Membro in due gang"</td><td>Il personaggio è in una gang Quasar e in una nativa. Vince Quasar: toglierlo da una delle due</td></tr>
+          <tr><td>Avviso "Chiave uguale a un lavoro"</td><td>La chiave coincide con un job ESX: serve una gang nuova con un'altra chiave</td></tr>
+          <tr><td>Il Control Center non si apre</td><td>Personaggio staff dedicato, potere attivo, livello admin e permesso <code>underground.apri</code> in F6 &gt; Permessi &gt; Underground</td></tr>
+        </tbody>
+      </table></div>
+      <p id="nessun-problema" class="vuoto" hidden>Nessun problema corrisponde alla ricerca.</p>
+    </section>
+
+    <div class="part">Parte 2 · Per le gang</div>
+
+    <section id="g-telefono">
+      <h2>Il telefono usa e getta</h2>
+      <p>Si usa dall'inventario, dalla barra rapida o con il tasto <em>"Underground: telefono usa e getta"</em>. Il personaggio lo tiene in mano e può camminare. All'avvio compare MUTO OS con il <strong>CANALE CRIPTATO</strong> e quanti sono in linea; la campanella in alto zittisce gli avvisi. I tasti <kbd>1</kbd>-<kbd>6</kbd> aprono i riquadri:</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Riquadro</th><th>A cosa serve</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1 · Chi c'è</strong></td><td>Chi è in giro e chi no, chi ha il telefono della gang. Sulla scheda di un grado più basso, chi può espellere vede BUTTA FUORI</td></tr>
+          <tr><td><strong>2 · Messaggi</strong></td><td>Il canale della gang. Codici rapidi: PULA IN ZONA, TUTTI AL COVO, SERVE UNA MANO, RIVALI IN GIRO, TUTTO TRANQUILLO, SILENZIO. Testo libero fino a 120 caratteri con "Allega dove sono". Sulle posizioni c'è SEGNA GPS. Le Reclute ascoltano e basta</td></tr>
+          <tr><td><strong>3 · Stash</strong></td><td>Le stash che il tuo grado vede, con GPS. Chi può gestirle ha CHIUDI/RIAPRI, CHIUDI TUTTO (quando arriva la polizia) e PIAZZA QUI. Le stash si aprono solo sul posto</td></tr>
+          <tr><td><strong>4 · Il covo</strong></td><td>PORTAMI AL COVO: GPS fino alla bacheca</td></tr>
+          <tr><td><strong>5 · Recluta</strong></td><td>Solo per chi può invitare: chi hai davanti entro 8 m e senza gang. DAGLI IL NUMERO gli manda l'invito, che ha 90 secondi per accettare</td></tr>
+          <tr><td><strong>6 · Registro</strong></td><td>Solo con il permesso registro: cosa è successo</td></tr>
+        </tbody>
+      </table></div>
+      <ul>
+        <li><strong>TIENI PREMUTO · BRUCIA</strong> per 1,5 secondi: il telefono sparisce per sempre. Da morto o a terra non si può. SPEGNI lo chiude.</li>
+        <li>Tasti: <kbd>Esc</kbd> chiude, <kbd>Backspace</kbd> torna indietro, <kbd>Invio</kbd> sulla scheda selezionata segna il GPS.</li>
+        <li><strong>NESSUN SEGNALE</strong>: il telefono è di un'altra gang, oppure non sei in una gang. <strong>LINEA SOSPESA</strong>: la gang è sospesa.</li>
+        <li>Con il telefono in tasca i nuovi messaggi arrivano come avviso "CANALE · &lt;gang&gt;".</li>
+      </ul>
+    </section>
+
+    <section id="g-bacheca">
+      <h2>La bacheca del covo</h2>
+      <p>Nel covo, target <strong>"Bacheca del covo"</strong>: la camera si avvicina e si apre la bacheca.</p>
+      <ul>
+        <li><strong>La crew</strong>: le polaroid su 5 file, una per grado, unite dal filo rosso. Clicca una foto per girarla e usare i timbri:
+          <ul>
+            <li><strong>PROMUOVI / RETROCEDI</strong>: per chi ha il permesso <code>ruoli</code>, solo per gradi sotto il proprio;</li>
+            <li><strong>BUTTA FUORI</strong>: per chi può espellere, solo gradi inferiori (gang Quasar: solo chi è online);</li>
+            <li><strong>PASSA IL COMANDO</strong>: solo il Leader di una gang nativa, che poi scende a Vice;</li>
+            <li><strong>ME NE VADO</strong>: sulla propria foto, solo gang native e non per il Leader.</li>
+          </ul>
+          Trascinare una foto su un'altra fila cambia il grado. <strong>PORTA DENTRO QUALCUNO</strong> recluta chi è lì con te.</li>
+        <li><strong>La zona</strong>: la mappa del covo con le porte.</li>
+        <li><strong>Le stash</strong>: schede con GPS, CHIUDI/RIAPRI, SPOSTA, NUOVA STASH.</li>
+        <li><strong>Cosa è successo</strong>: il registro, per i capi o per chi ha il permesso.</li>
+        <li><strong>Scatola telefoni</strong>: PRENDI UN TELEFONO, per chi ha il permesso <code>telefoni</code>.</li>
+      </ul>
+      <details><summary>Tutti i tasti della bacheca</summary>
+        <p><kbd>Tab</kbd> sezione successiva · frecce per muoversi · <kbd>Invio</kbd> gira la foto o apre · <kbd>Spazio</kbd> prendi la foto, <kbd>↑</kbd><kbd>↓</kbd> cambi fila, <kbd>Invio</kbd> la lasci · <kbd>X</kbd> butta fuori · <kbd>R</kbd> recluta · <kbd>N</kbd> nuova stash · <kbd>G</kbd> stash sul GPS · <kbd>Pag↑</kbd><kbd>Pag↓</kbd> sfoglia il registro · <kbd>?</kbd> legenda · <kbd>Esc</kbd> indietro o chiudi. Le conferme sono TIMBRA / LASCIA STARE.</p>
+      </details>
+    </section>
+
+    <section id="g-stash">
+      <h2>Armadietti e porte</h2>
+      <p>Avvicinati e usa il target <strong>"Apri &lt;nome&gt;"</strong> entro 2,5 m: devi essere vivo e il tuo grado deve bastare. L'armadietto apre il lucchetto e le ante, e gli altri membri vicini le vedono aperte finché lo usi. Si richiude quando chiudi l'inventario, ti allontani di oltre 4 m o muori.</p>
+      <p>Le porte del covo si aprono solo ai membri con i gradi ammessi. La polizia entra solo forzandole, dove è previsto.</p>
+    </section>
+
+    <section id="g-regole">
+      <h2>Gerarchia e regole</h2>
+      <ul>
+        <li>Gradi: <strong>4 Leader · 3 Vice Leader · 2 Capitano · 1 Operativo · 0 Recluta</strong>. I nomi possono cambiare da gang a gang.</li>
+        <li>Nessuno promuove al proprio livello o sopra, né agisce su chi ha un grado uguale o superiore.</li>
+        <li>Gradi, comando e uscita si gestiscono solo al covo, davanti alla bacheca.</li>
+        <li>Gang Quasar: il capo è il proprietario dell'organizzazione. Si entra e si esce passando da Quasar (invito accettato oppure menu <kbd>F4</kbd>), e reclutano o buttano fuori solo il capo e chi in Quasar gestisce i membri.</li>
+      </ul>
+    </section>
+
+    <div class="part">Consultazione</div>
+
+    <section id="tabelle">
+      <h2>Comandi e permessi</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>Comando o tasto</th><th>Chi può</th><th>Cosa fa</th></tr></thead>
+        <tbody>
+          <tr><td><code>/underground</code></td><td>Staff con potere attivo, admin</td><td>Apre il Control Center</td></tr>
+          <tr><td>Tasto "Control Center (staff)"</td><td>Come sopra</td><td>Come <code>/underground</code>, nessun tasto predefinito</td></tr>
+          <tr><td>Tasto "Telefono usa e getta"</td><td>Chi ha un <code>ug_telefono</code></td><td>Apre o chiude il telefono, nessun tasto predefinito</td></tr>
+          <tr><td><code>/giveitem ID ug_telefono 1</code></td><td>Staff admin</td><td>Dà un telefono MUTO</td></tr>
+          <tr><td><code>/crimecreator</code></td><td>Admin autorizzati</td><td>Crea e modifica le organizzazioni Quasar e il proprietario</td></tr>
+          <tr><td><kbd>F4</kbd></td><td>Membri Quasar</td><td>Menu organizzazione di Quasar: entrate e uscite, anche offline</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Permessi staff (F6 &gt; Permessi &gt; Underground)</h3>
+      <p>Prima di tutto serve sempre il potere staff attivo di livello admin.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Permesso</th><th>Predefinito</th><th>Serve per</th></tr></thead>
+        <tbody>
+          <tr><td><code>underground.apri</code></td><td>admin</td><td>Aprire il Control Center</td></tr>
+          <tr><td><code>underground.gang.gestisci</code></td><td>admin</td><td>Creare e modificare gang, profilo, stile, ruoli, ranghi</td></tr>
+          <tr><td><code>underground.gang.importa</code></td><td>admin</td><td>Importare e ricollegare da Quasar</td></tr>
+          <tr><td><code>underground.membri.gestisci</code></td><td>admin</td><td>Invitare, espellere, cambiare grado</td></tr>
+          <tr><td><code>underground.stash.gestisci</code></td><td>admin</td><td>Stash e bacheca: piazzare, spostare, modificare, attivare, eliminare</td></tr>
+          <tr><td><code>underground.stash.ispeziona</code></td><td>responsabile staff</td><td>Vedere il contenuto di una stash</td></tr>
+          <tr><td><code>underground.log.vedi</code></td><td>admin</td><td>Registro</td></tr>
+          <tr><td><code>underground.collaudo</code></td><td>admin</td><td>Collaudo T1-T10</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Cosa sblocca ogni grado (valori predefiniti)</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Azione</th><th>4</th><th>3</th><th>2</th><th>1</th><th>0</th></tr></thead>
+        <tbody>
+          <tr><td>Chi c'è, leggere i messaggi, il covo, aprire la bacheca</td><td class="c"><span class="si">✔</span></td><td class="c"><span class="si">✔</span></td><td class="c"><span class="si">✔</span></td><td class="c"><span class="si">✔</span></td><td class="c"><span class="si">✔</span></td></tr>
+          <tr><td>Scrivere messaggi e codici</td><td class="c"><span class="si">✔</span></td><td class="c"><span class="si">✔</span></td><td class="c"><span class="si">✔</span></td><td class="c"><span class="si">✔</span></td><td class="c"><span class="no">—</span></td></tr>
+          <tr><td>Aprire le stash (minimo predefinito: Operativo)</td><td class="c"><span class="si">✔</span></td><td class="c"><span class="si">✔</span></td><td class="c"><span class="si">✔</span></td><td class="c"><span class="si">✔</span></td><td class="c"><span class="no">—</span></td></tr>
+          <tr><td>Piazzare, spostare, chiudere stash</td><td class="c"><span class="si">✔</span></td><td class="c"><span class="si">✔</span></td><td class="c"><span class="no">—</span></td><td class="c"><span class="no">—</span></td><td class="c"><span class="no">—</span></td></tr>
+          <tr><td>Reclutare (gang native)</td><td class="c"><span class="si">✔</span></td><td class="c"><span class="si">✔</span></td><td class="c"><span class="si">✔</span></td><td class="c"><span class="no">—</span></td><td class="c"><span class="no">—</span></td></tr>
+          <tr><td>Buttare fuori gradi inferiori (gang native)</td><td class="c"><span class="si">✔</span></td><td class="c"><span class="si">✔</span></td><td class="c"><span class="no">—</span></td><td class="c"><span class="no">—</span></td><td class="c"><span class="no">—</span></td></tr>
+          <tr><td>Promuovere e retrocedere sotto il proprio grado</td><td class="c"><span class="si">✔</span></td><td class="c"><span class="no">—</span></td><td class="c"><span class="no">—</span></td><td class="c"><span class="no">—</span></td><td class="c"><span class="no">—</span></td></tr>
+          <tr><td>Passare il comando (gang native)</td><td class="c"><span class="si">✔</span></td><td class="c"><span class="no">—</span></td><td class="c"><span class="no">—</span></td><td class="c"><span class="no">—</span></td><td class="c"><span class="no">—</span></td></tr>
+          <tr><td>Registro</td><td class="c"><span class="si">✔</span></td><td class="c"><span class="si">✔</span></td><td class="c"><span class="no">—</span></td><td class="c"><span class="no">—</span></td><td class="c"><span class="no">—</span></td></tr>
+          <tr><td>Telefoni dalla scatola</td><td class="c"><span class="si">✔</span></td><td class="c"><span class="si">✔</span></td><td class="c"><span class="no">—</span></td><td class="c"><span class="no">—</span></td><td class="c"><span class="no">—</span></td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section id="numeri">
+      <h2>Numeri utili</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>Cosa</th><th>Valore</th></tr></thead>
+        <tbody>
+          <tr><td>Invito</td><td>90 secondi per rispondere, raggio 8 m</td></tr>
+          <tr><td>Stash</td><td>massimo 6 per gang · apertura 2,5 m · piazzamento entro 5 m · 1,5 m tra stash (2 m con armadietto) · predefinito 50 slot / 250 kg</td></tr>
+          <tr><td>Bacheca</td><td>1 per gang · apertura 2,5 m · "davanti alla bacheca" 4 m</td></tr>
+          <tr><td>Scatola telefoni</td><td>6 ogni 24 ore per gang</td></tr>
+          <tr><td>Messaggi</td><td>120 caratteri · ultimi 20 in memoria · 1 ogni 15 s a testa · 10 ogni 5 minuti per gang</td></tr>
+          <tr><td>Azioni Quasar</td><td>20 all'ora per gang</td></tr>
+          <tr><td>Registro</td><td>90 giorni</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section id="faq">
+      <h2>Domande frequenti</h2>
+      <details><summary>Un giocatore può stare in due gang?</summary><p>No. Se capita (una Quasar e una nativa) vince Quasar e il pannello avvisa.</p></details>
+      <details><summary>Entrare in una gang cambia il lavoro?</summary><p>No: MDT, <code>/lavori</code> e multijob restano uguali.</p></details>
+      <details><summary>Il capo di una gang Quasar può nominare un altro capo dalla bacheca?</summary><p>No. Il capo si cambia solo nel Crime Creator.</p></details>
+      <details><summary>Si può dare il grado 4 a qualcuno di una gang Quasar?</summary><p>No: il 4 è sempre il proprietario Quasar. Da Underground si danno solo i gradi da 0 a 3.</p></details>
+      <details><summary>Un membro Quasar offline si può retrocedere o espellere?</summary><p>Retrocedere sì, dallo staff (scheda Membri). Espellerlo si può solo dal menu F4 di Quasar.</p></details>
+      <details><summary>I messaggi del telefono si possono rileggere?</summary><p>In gioco no: spariscono al riavvio del server. Lo staff li trova nel database.</p></details>
+      <details><summary>Un telefono rubato funziona per il ladro?</summary><p>No: chi non è della gang vede NESSUN SEGNALE. Chi viene buttato fuori tiene il telefono, ma resta muto.</p></details>
+      <details><summary>Una Recluta può attivare un telefono nuovo?</summary><p>Sì: il primo membro che lo usa lo lega alla gang.</p></details>
+      <details><summary>Perché la gang vede le ispezioni dello staff?</summary><p>Il registro della gang mostra anche le azioni dello staff con il motivo. Per questo i motivi vanno scritti in modo neutro.</p></details>
+      <details><summary>Una gang sospesa perde la roba?</summary><p>No. Porte e stash restano chiuse finché la gang non torna attiva, e il contenuto resta.</p></details>
+      <details><summary>Si può cambiare la chiave di una gang?</summary><p>No. Serve una gang nuova, e porte e stash vanno spostate a mano.</p></details>
+    </section>
+
+    <section id="futuro">
+      <h2>In arrivo</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>Fase</th><th>Cosa porterà</th></tr></thead>
+        <tbody>
+          <tr><td>Tesoreria</td><td>Fondo della gang separato dalla cassa Quasar, con soldi puliti e sporchi; reputazione e Heat di base</td></tr>
+          <tr><td>Territori</td><td>Il possesso dei territori lo decide Underground, le guerre territoriali di Quasar si spengono</td></tr>
+          <tr><td>Racket</td><td>Produzione a cicli, pagamenti, attacco e difesa</td></tr>
+          <tr><td>Airdrop ed eventi</td><td>Lanci con aereo, cassa, zona e bottino, gestiti dal Control Center</td></tr>
+          <tr><td>Guerre</td><td>Guerre approvate dallo staff, con obiettivi e punteggi</td></tr>
+        </tbody>
+      </table></div>
+      <footer>PureLife RP · manuale interno dello staff · i valori indicati sono quelli predefiniti della configurazione al 03/10/2026</footer>
+    </section>
+  </main>
+</div>
+
+<script>
+(function () {
+  document.querySelectorAll('button.cmd').forEach(function (b) {
+    b.title = 'Clicca per copiare';
+    b.addEventListener('click', function () {
+      var testo = b.textContent.trim();
+      var fatto = function () { b.classList.add('copiato'); setTimeout(function () { b.classList.remove('copiato'); }, 1400); };
+      try {
+        navigator.clipboard.writeText(testo).then(fatto, function () { seleziona(b); });
+      } catch (e) { seleziona(b); }
+    });
+  });
+  function seleziona(el) {
+    var r = document.createRange(); r.selectNodeContents(el);
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+  }
+  var campo = document.getElementById('cerca-problemi');
+  var righe = document.querySelectorAll('#tab-problemi tbody tr');
+  var vuoto = document.getElementById('nessun-problema');
+  campo.addEventListener('input', function () {
+    var q = campo.value.trim().toLowerCase(); var visibili = 0;
+    righe.forEach(function (r) { var ok = !q || r.textContent.toLowerCase().indexOf(q) !== -1; r.hidden = !ok; if (ok) visibili++; });
+    vuoto.hidden = visibili !== 0;
+  });
+})();
+</script>
+
+</body></html>
